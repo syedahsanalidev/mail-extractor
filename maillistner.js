@@ -1,7 +1,8 @@
 var MailListener = require("mail-listener2");
 const dotenv = require('dotenv');
-const rp = require('request-promise');
-const cheerio = require('cheerio');
+const fs = require('fs')
+const chromeLauncher = require('chrome-launcher');
+
 
 dotenv.config();
 const { Chromeless } = require('chromeless')
@@ -51,19 +52,27 @@ mailListener.on("mail", function(mail, seqno, attributes){
     console.log("you received email from", mail.from);
     console.log("you'r received email subject is", mail.subject);
 
-        var sid = mail.eml.split('http://www.choicehomewarranty.com/cads/accept.php?sid=')[1].split('=')[0]
+    var sid = mail.eml.split('http://www.choicehomewarranty.com/cads/accept.php?sid=')[1].split('=')[0]
 
     async function run() {
         const chromeless = new Chromeless()
-
         const screenshot = await chromeless
             .goto('http://www.choicehomewarranty.com/cads/accept.php?sid=' + sid)
-            .type('chromeless', 'input[name="q"]')
+            .press(9)
+            .press(32)
             .press(13)
-            .wait('#resultStats')
             .screenshot()
-
-        console.log(screenshot) // prints local file path or S3 url
+            .html()
+        console.log("hi i m screenshot" + screenshot ) /// prints local file path or S3 url
+        let timestemp = Date.now()
+        timestemp = timestemp.toString()
+        let finalData = timestemp + "</br>" +screenshot
+        fs.appendFile("logs.html", finalData, function(err) {
+            if(err) {
+                return console.log(err);
+            }
+            console.log("The file was saved!");
+        });
 
         await chromeless.end()
     }

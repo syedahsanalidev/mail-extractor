@@ -1,0 +1,53 @@
+{
+  "cities": [
+    "Lahore",
+    "Islamabad",
+    "Karachi"
+  ],
+  "week-schedule": [
+    {
+      "id": 1,
+      "days": [
+        {
+          "day": "monday",
+          "cities": [
+            {
+              "city": "lahore",
+              "availability": true
+            },
+            {
+              "city": "karachi",
+              "availability": false
+            }
+          ]
+        },
+        {
+          "day": "tuesday",
+          "cities": [
+            {
+              "city": "lahore",
+              "availability": true
+            },
+            {
+              "city": "karachi",
+              "availability": false
+            }
+          ]
+        },
+        {
+          "day": "wednesday",
+          "cities": [
+            {
+              "city": "lahore",
+              "availability": false
+            },
+            {
+              "city": "karachi",
+              "availability": false
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}
