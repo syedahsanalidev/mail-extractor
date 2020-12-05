@@ -5,7 +5,7 @@
   "main": "index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "start": "concurrently \"json-server --watch db.json\" \"node maillistner.js\""
+    "start": "concurrently \"json-server --watch db.json --port 3000\" \"node maillistner.js --port 3001\""
   },
   "keywords": [],
   "author": "",
