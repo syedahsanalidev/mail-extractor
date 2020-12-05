@@ -2,10 +2,10 @@
   "name": "mail-extractor",
   "version": "1.0.0",
   "description": "",
-  "main": "index.js",
+  "main": "maillistner.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "start": "concurrently \"json-server --watch db.json\" \"node maillistner.js\""
+    "start": "node maillistner.js"
   },
   "keywords": [],
   "author": "",
