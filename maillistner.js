@@ -2,7 +2,7 @@ var MailListener = require("mail-listener2");
 const dotenv = require('dotenv');
 const fs = require('fs')
 const chromeLauncher = require('chrome-launcher');
-
+const json = require("./db.json")
 
 dotenv.config();
 const { Chromeless } = require('chromeless')
@@ -21,7 +21,7 @@ var mailListener = new MailListener({
     tls: true,
     tlsOptions: { rejectUnauthorized: false },
     mailbox: "INBOX", // mailbox to monitor
-    searchFilter: ["UNSEEN", ["FROM", "customerservice@choicehomewarranty.com"]], // the search filter being used after an IDLE notification has been retrieved
+    searchFilter: ["UNSEEN", ["FROM", "hamza.arif5587@gmail.com"]], // the search filter being used after an IDLE notification has been retrieved
     markSeen: true, // all fetched email willbe marked as seen and not fetched next time
     attachments:true
 });
@@ -48,12 +48,60 @@ mailListener.on("error", function(err){
 
 mailListener.on("mail", function(mail, seqno, attributes){
     // do something with mail object including attachments
-    console.log("emailParsed", mail);
-    console.log("you received email from", mail.from);
-    console.log("you'r received email subject is", mail.subject);
+    // console.log("emailParsed", mail);
+    console.log("you received email from:", mail.from);
+    console.log("you'r received email subject is:", mail.subject);
+    // console.log("you'r received email date is", mail.date);
 
     var sid = mail.eml.split('http://www.choicehomewarranty.com/cads/accept.php?sid=')[1].split('=')[0]
 
+
+
+
+    //fetchin location and checking availbilty
+    {
+        var fetchOrder = json.cities.map(holders=> holders.cities)
+        // console.log(fetchOrder)
+
+        let recivingDay = mail.eml.split('Date: ')[1].split(',')[0]
+        let recevingLocation = mail.eml.split('LOCATION: <strong>')[1].split('</strong></p>')[0]
+        console.log("Mail Receiving day:", recivingDay)
+        console.log("Order location:", recevingLocation)
+        let cityGroupIndex = -1;
+        let cityGroupName = null;
+        const city = recevingLocation;
+        const db_day = recivingDay;
+        // console.log(city)
+        // console.log(db_day)
+        let availability = false;
+        json.cities.map((item, index) => {
+            item.cities.map((innerItem, innerIndex) => {
+                if (innerItem.toLowerCase() === city.toLowerCase()) {
+                    cityGroupIndex = index;
+                    return false;
+                }
+            });
+        });
+        if (cityGroupIndex > -1) {
+            cityGroupName = json.cities[cityGroupIndex].group;
+            json["week-schedule"].map((schedule, s) => {
+                schedule.days.map((day, d) => {
+                    if (day.day.toLowerCase() === db_day.toLowerCase()) {
+                        day.cities.map((city, c) => {
+                            if (city.city.toLowerCase() === cityGroupName.toString().toLowerCase()) {
+                                availability = city.availability;
+                            }
+                        })
+                    }
+                });
+            });
+        }
+        console.log("You received mail on: ", db_day);
+        console.log("Your receiving mail belongs to:",cityGroupName);
+        console.log("Your availability is: ", availability);
+    }
+
+    //
     async function run() {
         const chromeless = new Chromeless()
         console.log("i am in chromeless")
@@ -64,7 +112,7 @@ mailListener.on("mail", function(mail, seqno, attributes){
             .press(13)
             .screenshot()
             .html()
-        console.log("hi i m screenshot" + screenshot ) /// prints local file path or S3 url
+        // console.log("hi i m screenshot" + screenshot ) /// prints local file path or S3 url
         let timestemp = new Date()
             timestemp = timestemp.toString()
         let finalData = timestemp + "</br>" +screenshot

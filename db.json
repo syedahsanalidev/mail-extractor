@@ -1,48 +1,61 @@
 {
   "cities": [
-    "Lahore",
-    "Islamabad",
-    "Karachi"
+    {
+      "group": "groupA",
+      "cities": [
+        "Lahore",
+        "Islamabad",
+        "Karachi"
+      ]
+    },
+    {
+      "group": "groupB",
+      "cities":[
+        "Faisalabad",
+        "Multan",
+        "Tampa FL, 33635"
+      ]
+    }
   ],
   "week-schedule": [
     {
       "id": 1,
       "days": [
         {
-          "day": "monday",
+          "day": "Mon",
           "cities": [
             {
-              "city": "lahore",
+              "city": "groupA",
               "availability": true
             },
             {
-              "city": "karachi",
+              "city": "groupB",
               "availability": false
             }
           ]
         },
         {
-          "day": "tuesday",
+          "day": "Tue",
           "cities": [
             {
-              "city": "lahore",
+              "city": "groupA",
               "availability": true
             },
             {
-              "city": "karachi",
+              "city": "groupB",
               "availability": false
             }
           ]
         },
         {
-          "day": "wednesday",
+          "day": "Wed",
           "cities": [
             {
-              "city": "lahore",
+              "city": "groupA",
               "availability": false
             },
             {
-              "city": "karachi",
+              "city": "groupB",
               "availability": false
             }
           ]
