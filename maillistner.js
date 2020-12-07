@@ -21,7 +21,7 @@ var mailListener = new MailListener({
     tls: true,
     tlsOptions: { rejectUnauthorized: false },
     mailbox: "INBOX", // mailbox to monitor
-    searchFilter: ["UNSEEN", ["FROM", "saqibullhassan4444@gmail.com"]], // the search filter being used after an IDLE notification has been retrieved
+    searchFilter: ["UNSEEN", ["FROM", "customerservice@choicehomewarranty.com"]], // the search filter being used after an IDLE notification has been retrieved
     markSeen: true, // all fetched email willbe marked as seen and not fetched next time
     attachments:true
 });
