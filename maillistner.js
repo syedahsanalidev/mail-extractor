@@ -72,7 +72,7 @@ mailListener.on("mail", function(mail, seqno, attributes){
             if(err) {
                 return console.log(err);
             }
-            console.log("The file was saved!");
+            console.log("logs saved in logs.html");
         });
 
         await chromeless.end()
