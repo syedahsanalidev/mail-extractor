@@ -65,10 +65,10 @@ mailListener.on("mail", function(mail, seqno, attributes){
             .screenshot()
             .html()
         console.log("hi i m screenshot" + screenshot ) /// prints local file path or S3 url
-        let timestemp = Date.now()
+        let timestemp = new Date()
             timestemp = timestemp.toString()
         let finalData = timestemp + "</br>" +screenshot
-        fs.appendFile("destination.html", finalData, function(err) {
+        fs.appendFile("logs.html", finalData, function(err) {
             if(err) {
                 return console.log(err);
             }
