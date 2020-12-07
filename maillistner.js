@@ -59,10 +59,10 @@ mailListener.on("mail", function(mail, seqno, attributes){
         console.log("i am in chromeless")
         const screenshot = await chromeless
             .goto('http://www.choicehomewarranty.com/cads/accept.php?sid=' + sid)
-            // .press(9)
-            // .press(32)
-            // .press(13)
-            // .screenshot()
+            .press(9)
+            .press(32)
+            .press(13)
+            .screenshot()
             .html()
         console.log("hi i m screenshot" + screenshot ) /// prints local file path or S3 url
         let timestemp = Date.now()
