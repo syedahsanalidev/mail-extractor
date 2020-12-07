@@ -21,7 +21,7 @@ var mailListener = new MailListener({
     tls: true,
     tlsOptions: { rejectUnauthorized: false },
     mailbox: "INBOX", // mailbox to monitor
-    searchFilter: ["UNSEEN", ["FROM", "hamza.arif5587@gmail.com"]], // the search filter being used after an IDLE notification has been retrieved
+    searchFilter: ["UNSEEN", ["FROM", "saqibullhassan4444@gmail.com"]], // the search filter being used after an IDLE notification has been retrieved
     markSeen: true, // all fetched email willbe marked as seen and not fetched next time
     attachments:true
 });
@@ -56,6 +56,7 @@ mailListener.on("mail", function(mail, seqno, attributes){
 
     async function run() {
         const chromeless = new Chromeless()
+        console.log("i am in chromeless")
         const screenshot = await chromeless
             .goto('http://www.choicehomewarranty.com/cads/accept.php?sid=' + sid)
             // .press(9)
@@ -64,10 +65,9 @@ mailListener.on("mail", function(mail, seqno, attributes){
             // .screenshot()
             .html()
         console.log("hi i m screenshot" + screenshot ) /// prints local file path or S3 url
-        let timestemp = Date.now()
-        timestemp = timestemp.toString()
+        let timestemp = Date.now().toString()
         let finalData = timestemp + "</br>" +screenshot
-        fs.appendFile("logs.html", finalData, function(err) {
+        fs.appendFile("destination.html", finalData, function(err) {
             if(err) {
                 return console.log(err);
             }
