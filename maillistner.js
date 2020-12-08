@@ -54,6 +54,8 @@ mailListener.on("mail", function(mail, seqno, attributes){
     // console.log("you'r received email date is", mail.date);
 
     var sid = mail.eml.split('http://www.choicehomewarranty.com/cads/accept.php?sid=')[1].split('=')[0]
+    var recivingDay = mail.eml.split('Date: ')[1].split(',')[0]
+    var recevingLocation = mail.eml.split('LOCATION: <strong>')[1].split('</strong></p>')[0]
 
 
 
@@ -63,8 +65,7 @@ mailListener.on("mail", function(mail, seqno, attributes){
         var fetchOrder = json.cities.map(holders=> holders.cities)
         // console.log(fetchOrder)
 
-        let recivingDay = mail.eml.split('Date: ')[1].split(',')[0]
-        let recevingLocation = mail.eml.split('LOCATION: <strong>')[1].split('</strong></p>')[0]
+
         console.log("Mail Receiving day:", recivingDay)
         console.log("Order location:", recevingLocation)
         let cityGroupIndex = -1;
@@ -73,7 +74,7 @@ mailListener.on("mail", function(mail, seqno, attributes){
         const db_day = recivingDay;
         // console.log(city)
         // console.log(db_day)
-        let availability = false;
+        var availability = false;
         json.cities.map((item, index) => {
             item.cities.map((innerItem, innerIndex) => {
                 if (innerItem.toLowerCase() === city.toLowerCase()) {
@@ -102,31 +103,36 @@ mailListener.on("mail", function(mail, seqno, attributes){
     }
 
     //
-    async function run() {
-        const chromeless = new Chromeless()
-        console.log("i am in chromeless")
-        const screenshot = await chromeless
-            .goto('http://www.choicehomewarranty.com/cads/accept.php?sid=' + sid)
-            .press(9)
-            .press(32)
-            .press(13)
-            .screenshot()
-            .html()
-        // console.log("hi i m screenshot" + screenshot ) /// prints local file path or S3 url
-        let timestemp = new Date()
+
+    if (availability){
+        async function run() {
+            const chromeless = new Chromeless()
+            console.log("i am in chromeless")
+            const screenshot = await chromeless
+                .goto('http://www.choicehomewarranty.com/cads/accept.php?sid=' + sid)
+                // .press(9)
+                // .press(32)
+                // .press(13)
+                // .screenshot()
+                .html()
+            // console.log("hi i m screenshot" + screenshot ) /// prints local file path or S3 url
+            let timestemp = new Date()
             timestemp = timestemp.toString()
-        let finalData = timestemp + "</br>" +screenshot
-        fs.appendFile("logs.html", finalData, function(err) {
-            if(err) {
-                return console.log(err);
-            }
-            console.log("logs saved in logs.html");
-        });
+            let finalData = timestemp + "</br>" +screenshot
+            fs.appendFile("logs.html", finalData, function(err) {
+                if(err) {
+                    return console.log(err);
+                }
+                console.log("logs saved in logs.html");
+            });
 
-        await chromeless.end()
+            await chromeless.end()
+        }
+
+        run().catch(console.error.bind(console))
+
+
     }
-
-    run().catch(console.error.bind(console))
 
 
 //     let html = mail.eml
