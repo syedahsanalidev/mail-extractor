@@ -48,8 +48,8 @@ const clearAvailabilities = async () => {
 
 
 var mailListener = new MailListener({
-    username: "marketing@thehometownair.com",
-    password: "Steve2020!",
+    username: process.env.APPUSER,
+    password: process.env.PASSWORD,
     host: "imap.gmail.com",
     port: 993, // imap port
     tls: true,
