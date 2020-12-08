@@ -1,17 +1,53 @@
-var MailListener = require("mail-listener2");
+const MailListener = require("mail-listener2");
 const dotenv = require('dotenv');
 const fs = require('fs')
-const chromeLauncher = require('chrome-launcher');
+const axios = require('axios')
 const json = require("./db.json")
-
 dotenv.config();
 const { Chromeless } = require('chromeless')
-
-
+const schedule = require('node-schedule');
 
 const username = process.env.APPUSER;
 const password = process.env.PASSWORD;
 console.log("user", process.env.APPUSER);
+
+
+var rule = new schedule.RecurrenceRule();
+rule.dayOfWeek = [0, new schedule.Range(0, 6)];
+rule.hour = 18;
+rule.minute = 0;
+
+var j = schedule.scheduleJob(rule, function(){
+    console.log('Today is recognized by Rebecca Black!');
+    clearAvailabilities()
+});
+
+
+const clearAvailabilities = async () => {
+    console.log("Starting crone job at" + new Date() )
+    let date = new Date()
+    let day = date.getDay()
+    console.log("m here")
+    if (day > 1) {
+        await axios.get(`http://localhost:3000/days?day_lte=${day-1}`).then(days => {
+            days.data.map(dataDay => {
+                axios.delete(`http://localhost:3000/days/${dataDay.id}`);
+            });
+        });
+        // for (let i=1; i<day;i++) {
+
+        // }
+        // console.log("before removing item", json.days)
+        // json.days.splice(0,day)
+        // axios.get(`http://localhost:3000/posts/days?_start=0&_end=${day}`).then(function (res){
+        //     console.log("response" + res)
+        // })
+        // console.log("cleared")
+        // console.log(json.days)
+        console.log("Job completed closing process")
+    }
+}
+
 
 var mailListener = new MailListener({
     username: username,
@@ -34,7 +70,6 @@ mailListener.start();
 //mailListener.stop();
 
 mailListener.on("server:connected", function(){
-
     console.log("imapConnected");
 });
 

@@ -1,65 +1,67 @@
 {
-  "cities": [
+  "Groups": [
     {
-      "group": "groupA",
-      "cities": [
+      "groupA": [
         "Lahore",
         "Islamabad",
         "Tampa FL, 33635"
       ]
     },
     {
-      "group": "groupB",
-      "cities":[
+      "groupB": [
         "Faisalabad",
         "Multan",
         "Karachi"
       ]
     }
   ],
-  "week-schedule": [
+  "days": [
     {
-      "id": 1,
-      "days": [
-        {
-          "day": "Mon",
-          "cities": [
-            {
-              "city": "groupA",
-              "availability": true
-            },
-            {
-              "city": "groupB",
-              "availability": false
-            }
-          ]
-        },
-        {
-          "day": "Tue",
-          "cities": [
-            {
-              "city": "groupA",
-              "availability": true
-            },
-            {
-              "city": "groupB",
-              "availability": false
-            }
-          ]
-        },
-        {
-          "day": "Wed",
-          "cities": [
-            {
-              "city": "groupA",
-              "availability": false
-            },
-            {
-              "city": "groupB",
-              "availability": false
-            }
-          ]
-        }
+      "id": 2,
+      "day": 2,
+      "Groups": [
+        "groupA",
+        "groupC"
+      ]
+    },
+    {
+      "id": 3,
+      "day": 3,
+      "Groups": [
+        "groupA",
+        "groupB"
+      ]
+    },
+    {
+      "id": 4,
+      "day": 4,
+      "Groups": [
+        "groupA",
+        "groupB"
+      ]
+    },
+    {
+      "id": 5,
+      "day": 5,
+      "Groups": [
+        "groupA",
+        "groupB"
+      ]
+    },
+    {
+      "id": 6,
+      "day": 6,
+      "Groups": [
+        "groupA",
+        "groupB"
+      ]
+    },
+    {
+      "id": 7,
+      "day": 7,
+      "Groups": [
+        "groupA",
+        "groupB"
       ]
     }
   ]
