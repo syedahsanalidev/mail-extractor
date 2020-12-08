@@ -15,7 +15,7 @@ console.log("user", process.env.APPUSER);
 var rule = new schedule.RecurrenceRule();
 rule.dayOfWeek = [0, new schedule.Range(0, 6)];
 rule.hour = 18;
-rule.minute = 0;
+rule.minute = 50;
 
 var j = schedule.scheduleJob(rule, function(){
     clearAvailabilities()
@@ -69,6 +69,8 @@ mailListener.start();
 //mailListener.stop();
 
 mailListener.on("server:connected", function(){
+    console.log(username)
+    console.log(password)
     console.log("imapConnected");
 });
 
