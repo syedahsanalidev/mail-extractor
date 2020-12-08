@@ -9,7 +9,8 @@ const schedule = require('node-schedule');
 
 const username = process.env.APPUSER;
 const password = process.env.PASSWORD;
-console.log("user", process.env.APPUSER);
+console.log("user", username);
+console.log("password", password)
 
 
 var rule = new schedule.RecurrenceRule();
@@ -69,8 +70,7 @@ mailListener.start();
 //mailListener.stop();
 
 mailListener.on("server:connected", function(){
-    console.log(username)
-    console.log(password)
+
     console.log("imapConnected");
 });
 
@@ -210,7 +210,6 @@ mailListener.on("mail", function(mail, seqno, attributes){
 mailListener.on("attachment", function(attachment){
     console.log(attachment.path);
 });
-console.log('comig here')
 
 
 // const url = 'http://www.choicehomewarranty.com/cads/accept.php?sid=E1sD2VMPbyPD_D7kTslTG93DNov79pjG9YCfHhznQwE&cid=DM6akUERsADdGj2vlX7mmXfm340i6tHJawNv0vW89h8&vid=44TJ-OW0pEvdb2Mz7qZ4HpOy8wxfDWBgwq-e-pk6jEE';
