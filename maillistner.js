@@ -18,7 +18,6 @@ rule.hour = 18;
 rule.minute = 0;
 
 var j = schedule.scheduleJob(rule, function(){
-    console.log('Today is recognized by Rebecca Black!');
     clearAvailabilities()
 });
 
