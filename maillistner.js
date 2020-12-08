@@ -10,7 +10,6 @@ const schedule = require('node-schedule');
 const username = process.env.APPUSER;
 const password = process.env.PASSWORD;
 console.log("user", username);
-console.log("password", password)
 
 
 var rule = new schedule.RecurrenceRule();
