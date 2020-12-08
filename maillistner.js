@@ -4,13 +4,12 @@ const fs = require('fs')
 const axios = require('axios')
 const json = require("./db.json")
 dotenv.config();
-const { Chromeless } = require('chromeless')
+const { Chromeless } = require('chromeless');
 const schedule = require('node-schedule');
 
 const username = process.env.APPUSER;
 const password = process.env.PASSWORD;
 console.log("user", username);
-
 
 var rule = new schedule.RecurrenceRule();
 rule.dayOfWeek = [0, new schedule.Range(0, 6)];
@@ -49,8 +48,8 @@ const clearAvailabilities = async () => {
 
 
 var mailListener = new MailListener({
-    username: username,
-    password: password,
+    username: "marketing@thehometownair.com",
+    password: "Steve2020!",
     host: "imap.gmail.com",
     port: 993, // imap port
     tls: true,
@@ -69,7 +68,6 @@ mailListener.start();
 //mailListener.stop();
 
 mailListener.on("server:connected", function(){
-
     console.log("imapConnected");
 });
 
@@ -87,20 +85,13 @@ mailListener.on("mail", function(mail, seqno, attributes){
     console.log("you received email from:", mail.from);
     console.log("you'r received email subject is:", mail.subject);
     // console.log("you'r received email date is", mail.date);
-
     var sid = mail.eml.split('http://www.choicehomewarranty.com/cads/accept.php?sid=')[1].split('=')[0]
     var recivingDay = mail.eml.split('Date: ')[1].split(',')[0]
     var recevingLocation = mail.eml.split('LOCATION: <strong>')[1].split('</strong></p>')[0]
-
-
-
-
     //fetchin location and checking availbilty
     {
         var fetchOrder = json.cities.map(holders=> holders.cities)
         // console.log(fetchOrder)
-
-
         console.log("Mail Receiving day:", recivingDay)
         console.log("Order location:", recevingLocation)
         let cityGroupIndex = -1;
@@ -160,16 +151,10 @@ mailListener.on("mail", function(mail, seqno, attributes){
                 }
                 console.log("logs saved in logs.html");
             });
-
             await chromeless.end()
         }
-
         run().catch(console.error.bind(console))
-
-
     }
-
-
 //     let html = mail.eml
 //     const pp = function(html){
 //            // success!
@@ -202,14 +187,12 @@ mailListener.on("mail", function(mail, seqno, attributes){
 //
 //     await chromeless.end()
 // }
-
     // run().catch(console.error.bind(console))
 });
 
 mailListener.on("attachment", function(attachment){
     console.log(attachment.path);
 });
-
 
 // const url = 'http://www.choicehomewarranty.com/cads/accept.php?sid=E1sD2VMPbyPD_D7kTslTG93DNov79pjG9YCfHhznQwE&cid=DM6akUERsADdGj2vlX7mmXfm340i6tHJawNv0vW89h8&vid=44TJ-OW0pEvdb2Mz7qZ4HpOy8wxfDWBgwq-e-pk6jEE';
 //
